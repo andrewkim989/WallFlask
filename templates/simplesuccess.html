@@ -1,0 +1,80 @@
+<html>
+    <head>
+        <title>{{session['firstname']}}'s Homepage</title>
+
+        <link rel = "stylesheet"
+        href = "https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+        integrity = "sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+        crossorigin = "anonymous">
+
+        <style>
+            h2 {
+                margin: 10px;
+                display: inline-block;
+            }
+            h3 {
+                display: inline-block;
+                margin-left: 100px;
+            }
+            a {
+                margin-left: 400px;
+                align-content: right;
+            }
+            #blackline {
+                background-color: black;
+                height: 5px;
+            }
+            h4 {
+                margin: 15px;
+            }
+            #messages {
+                margin-left: 60px;
+                margin-top: 30px;
+                display: inline-block;
+                vertical-align: top;
+            }
+            #send {
+                margin-left: 200px;
+                margin-top: 30px;
+                display: inline-block;
+                vertical-align: top;
+            }
+            input[type = submit] {
+                margin-bottom: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id = "top">
+            <h2>Coding Dojo Wall (Simplified)</h2>
+            <h3>Welcome, {{session['firstname']}}!</h3>
+            <a class = "btn" href = "/">Logout!</a>
+        </div>
+        <div id = "blackline"></div>
+        <div id = "main">
+            <div id = "messages">
+                <h4><u> {{r}} message(s) for you, {{session['firstname']}}</u></h4>
+                {% for message in messages %}
+                    <p>{{message['sendername']}} said: ({{message['created_at']}})</p>
+                    <p>{{message['message']}}</p>
+                {% endfor %}
+            </div>
+            <div id = "send">
+                <h4><u>Send a message</u></h4>
+                <p>You have sent a total of {{s}} messages so far.</p>
+                <div id = "namelist">
+                    {% for user in users %}
+                        <form action = '/send' method = 'post'>
+                            {{user['firstname']}}:
+                            <br>
+                            <textarea name = "message" cols = "50"></textarea>
+                            <br>
+                            <input type = 'hidden' name = "receiver" value = {{user['firstname']}}>
+                            <input type = 'submit' value = 'Send!'>
+                        </form>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
